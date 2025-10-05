@@ -701,7 +701,7 @@ class TestRunDiffMode:
             run_diff_mode("hello")
         captured = capsys.readouterr()
         assert "Diff Mode" in captured.out
-        assert "Current string state:" in captured.out
+        assert "Range" in captured.out
 
     def test_longer_phrase(self, capsys):
         """Should handle request for longer phrase."""
