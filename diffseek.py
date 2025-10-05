@@ -3,7 +3,7 @@
 diffseek - A tool for comparing long strings across devices via binary search
 """
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 import argparse
 import hashlib
