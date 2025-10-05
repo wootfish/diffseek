@@ -41,6 +41,7 @@ RESET = "\033[0m"
 ORANGE = "\033[38;5;208m"
 WHITE = "\033[97m"
 RED = "\033[91m"
+UNDERLINE = "\033[4m"
 
 
 def hash_string(s):
@@ -89,8 +90,12 @@ class DiffState:
         self.ranges_to_check = deque()
         self.ranges_to_check.append((0, target_length))
 
-    def display_string(self):
-        """Display the user string with color coding."""
+    def display_string(self, current_range=None):
+        """Display the user string with color coding.
+
+        Args:
+            current_range: Optional tuple (start, end) indicating the range currently being tested
+        """
         if not self.user_string:
             print("(empty string)")
             return
@@ -103,13 +108,24 @@ class DiffState:
             char = self.user_string[i]
             state = self.char_states[i]
 
+            # Check if this character is in the current testing range
+            in_current_range = current_range and current_range[0] <= i < current_range[1]
+
             if state == 1:  # known-good
-                result.append(f"{WHITE}{char}{RESET}")
+                color = WHITE
             elif state == 2:  # possible-error
-                result.append(f"{ORANGE}{char}{RESET}")
+                color = ORANGE
             elif state == 3:  # definite-error
-                result.append(f"{RED}{char}{RESET}")
+                color = RED
             else:  # unknown
+                color = ""
+
+            # Apply underline if in current range
+            if in_current_range:
+                result.append(f"{UNDERLINE}{color}{char}{RESET}")
+            elif color:
+                result.append(f"{color}{char}{RESET}")
+            else:
                 result.append(char)
 
         print("".join(result))
@@ -208,6 +224,10 @@ def run_diff_mode(user_string):
 
         print(f"\n--- Checking characters {start} to {end-1} ---")
 
+        # Display string with underline showing current range
+        state.display_string(current_range=(start, end))
+        print()
+
         # Get substring to check
         substring = user_string[start:end] if end <= len(user_string) else user_string[start:]
 
@@ -243,10 +263,6 @@ def run_diff_mode(user_string):
 
         matches = (response == 'y')
         state.mark_range(start, end, matches)
-
-        # Display current state
-        print("\nCurrent string state:")
-        state.display_string()
 
 
 def main():
