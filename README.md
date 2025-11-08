@@ -24,6 +24,12 @@ The tool uses breadth-first search when both strings have matching target length
 ## Usage
 
 ```bash
+pip install diffseek
+```
+
+Then,
+
+```bash
 diffseek
 # or
 ./diffseek.py
