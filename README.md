@@ -33,4 +33,6 @@ python3 diffseek.py
 
 ## Disclosure
 
-This tool was implemented by Claude Code from a specification I provided. I fixed minor bugs and verified it works for my use case. It is primarily AI-written code. If you find any bugs, feel free to open an issue or a PR; these will be human-reviewed.
+This tool was implemented by Claude Code from a specification I provided. I fixed minor bugs and verified it works for my use case. It is primarily AI-written code. You might not care, but if you do then now you know.
+
+If you run into any problems, feel free to open an issue or a PR; these will be human-reviewed.
